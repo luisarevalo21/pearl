@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import Dropdown from 'react-bootstrap/Dropdown'
+import Dropdown from 'react-bootstrap/Dropdown';
+// import DropdownMenu from 'react-bootstrap/DropdownMenu';
 
 class Converter extends Component {
 
@@ -26,7 +26,7 @@ class Converter extends Component {
         Axios.get(`https://free.currconv.com/api/v7/currencies?apiKey=${apiKey}`)
             .then(response => {
                 console.log(response);
-                let id = response.data.results;
+                let id = Object.keys(response.data.results);
                 this.state.currencyID.push(id)
             })
         console.log('Currency ID:', this.state.currencyID);
@@ -43,19 +43,16 @@ class Converter extends Component {
 
                     <div className='row justify-content-sm-center'>
                         <div className='col-sm-12 text-center'>
-                            <ButtonToolbar>
-                                {[DropdownButton].map((DropdownType, idx) => (
-                                    <DropdownType
-                                        size="sm"
-                                        variant="secondary"
-                                        title="Drop small"
-                                        id={`dropdown-button-drop-${idx}`}
-                                        key={idx}
-                                    >
-                                        <Dropdown.Item eventKey={idx}>{this.state.currencyID[0].keys}</Dropdown.Item>
-                                    </DropdownType>
-                                ))}
-                            </ButtonToolbar>
+                            <DropdownButton id="dropdown-item-button" title="Dropdown button">
+
+                                
+                                         <Dropdown.Item as="button">{this.state.currencyID}</Dropdown.Item>
+                                
+
+                                {/* <Dropdown.Item as="button">Action</Dropdown.Item>
+                                <Dropdown.Item as="button">Another action</Dropdown.Item>
+                                <Dropdown.Item as="button">Something else</Dropdown.Item> */}
+                            </DropdownButton>
                         </div>
                     </div>
 
