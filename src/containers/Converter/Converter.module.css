@@ -9,9 +9,22 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  background: lightgrey;
 }
 .Select {
   /* height: 0; */
   /* height: 70px; */
   width: 50%;
+  margin-bottom: 15px;
+}
+
+.Button {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.Input {
+  width: 50%;
+  margin-bottom: 5px;
 }

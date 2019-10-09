@@ -3,6 +3,9 @@ import axios from "axios";
 // import DropdownButton from "react-bootstrap/DropdownButton";
 // import Dropdown from "react-bootstrap/Dropdown";
 // import DropdownMenu from 'react-bootstrap/DropdownMenu';
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
+
 import classes from "./Converter.module.css";
 import Select from "react-select";
 import Results from "../../components/Results/Results";
@@ -13,7 +16,8 @@ class Converter extends Component {
     currencyVal: 0,
     pearlsConversion: 0,
     euroConversaion: 0,
-    apiKey: "9cc6f8323af31d2f1249"
+    apiKey: "9cc6f8323af31d2f1249",
+    conversionValue: 0
   };
 
   componentDidMount() {
@@ -33,14 +37,14 @@ class Converter extends Component {
       )
       .then(response => {
         console.log(response);
-        const currencyNamesArray = Object.keys(response.data.results).map(
-          element => {
+        const currencyNamesArray = Object.keys(response.data.results)
+          .map(element => {
             return {
               value: element,
               label: element
             };
-          }
-        );
+          })
+          .filter(element => element.value !== "EUR");
 
         // const array = currencyValue.map(element => {
         //   return {
@@ -53,7 +57,10 @@ class Converter extends Component {
         // const array =
 
         //   .currencyID.push(id);
-        this.setState({ options: currencyNamesArray });
+        this.setState({
+          options: currencyNamesArray,
+          conversionValue: this.props.conversionValue
+        });
       });
     // console.log("Currency ID:", this.state.currencyID);
   }
@@ -80,8 +87,9 @@ class Converter extends Component {
         const conversation = response.data[query];
         const convertedToEuro = currencyVal * conversation;
         console.log(convertedToEuro);
-        const convertedToPearls = convertedToEuro / 1.6;
+        const convertedToPearls = convertedToEuro / this.state.conversionValue;
         console.log(convertedToPearls);
+
         this.setState({
           pearlsConversion: convertedToPearls.toFixed(2),
           euroConversaion: convertedToEuro.toFixed(2)
@@ -100,22 +108,29 @@ class Converter extends Component {
     // }
 
     return (
+      // <Tabs>
+      //   <Tab eventKey="summer" title="Summer">
       <div className={classes.Converter}>
         <p> Logo will go here</p>
-
-        <p> 1 Pearl = 1.6 Euro</p>
+        <p> 1 Pearl = {this.props.conversionValue} Euro</p>
         <Select
           value={this.state.currentValue}
           onChange={this.handleChange}
           options={this.state.options}
           className={classes.Select}
         />
-        <input placeholder="0.00" type="number" onChange={this.handleInput} />
+        <input
+          placeholder="0.00"
+          type="number"
+          onChange={this.handleInput}
+          className={classes.Input}
+        />
 
         <button
           onClick={() =>
             this.conversation(this.state.currencyVal, this.state.currentValue)
           }
+          className={classes.Button}
         >
           Convert
         </button>
@@ -126,10 +141,14 @@ class Converter extends Component {
           currentCurrency={this.state.currencyVal}
         />
       </div>
-      //   <div className="row justify-content-sm-center mt-3">
+      // </Tab>
+
+      // <Tab eventKey="winter" title="Winter"></Tab>
+      //{/* //   <div className="row justify-content-sm-center mt-3">
       //     <div className="col-sm-3 border border-dark rounded-lg p-2">
       //       <div className="row justify-content-sm-center">
-      //         <div className="col-sm-12 text-center">
+      //         <div className="col-sm-12 text-center"> */}
+      // </Tabs>
     );
   }
 }
