@@ -5,6 +5,10 @@ const results = props => {
     <div className={classes.Results}>
       <p>{props.pearls} Ƥ</p>
       <p>{props.euros} €</p>
+
+      {/* <p>
+        {props.currentCurrency} {props.currencyName}
+      </p> */}
       <p>{props.currentCurrency}</p>
     </div>
   );

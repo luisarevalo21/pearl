@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Title />
-      <Tabs defaultActiveKey="summer">
+      <Tabs defaultActiveKey="summer" className="Tab">
         <Tab eventKey="summer" title="Summer">
           <Converter conversionValue="1.6" />
         </Tab>

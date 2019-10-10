@@ -1,0 +1,10 @@
+.Navbar {
+  display: flex;
+  align-items: center;
+  background-color: lightgray;
+  text-align: center;
+}
+
+.Title {
+  margin: 0 auto;
+}

@@ -75,29 +75,33 @@ class Converter extends Component {
 
   conversation = (currencyVal, currency) => {
     // console.log("inside the converdation");
-    const query = currency.value + "_" + "EUR";
-    axios
-      .get(
-        "https://free.currconv.com/api/v7/convert?q=" +
-          query +
-          "&compact=ultra&apiKey=" +
-          this.state.apiKey
-      )
-      .then(response => {
-        const conversation = response.data[query];
-        const convertedToEuro = currencyVal * conversation;
-        console.log(convertedToEuro);
-        const convertedToPearls = convertedToEuro / this.state.conversionValue;
-        console.log(convertedToPearls);
 
-        this.setState({
-          pearlsConversion: convertedToPearls.toFixed(2),
-          euroConversaion: convertedToEuro.toFixed(2)
+    if (currencyVal !== null && currency !== "") {
+      const query = currency.value + "_" + "EUR";
+      axios
+        .get(
+          "https://free.currconv.com/api/v7/convert?q=" +
+            query +
+            "&compact=ultra&apiKey=" +
+            this.state.apiKey
+        )
+        .then(response => {
+          const conversation = response.data[query];
+          const convertedToEuro = currencyVal * conversation;
+          console.log(convertedToEuro);
+          const convertedToPearls =
+            convertedToEuro / this.state.conversionValue;
+          console.log(convertedToPearls);
+
+          this.setState({
+            pearlsConversion: convertedToPearls.toFixed(2),
+            euroConversaion: convertedToEuro.toFixed(2)
+          });
+        })
+        .catch(error => {
+          console.log(error);
         });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    }
     // console.log(conversation);
   };
   render() {
@@ -118,6 +122,7 @@ class Converter extends Component {
           onChange={this.handleChange}
           options={this.state.options}
           className={classes.Select}
+          // styles={{ height: "50px" }}
         />
         <input
           placeholder="0.00"
@@ -139,6 +144,7 @@ class Converter extends Component {
           pearls={this.state.pearlsConversion}
           euros={this.state.euroConversaion}
           currentCurrency={this.state.currencyVal}
+          currencyName={this.state.currentValue.value}
         />
       </div>
       // </Tab>
