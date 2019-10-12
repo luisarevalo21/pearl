@@ -3,17 +3,18 @@ import axios from "axios";
 // import DropdownButton from "react-bootstrap/DropdownButton";
 // import Dropdown from "react-bootstrap/Dropdown";
 // import DropdownMenu from 'react-bootstrap/DropdownMenu';
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
-
+// import Tabs from "react-bootstrap/Tabs";
+// import Tab from "react-bootstrap/Tab";
 import classes from "./Converter.module.css";
 import Select from "react-select";
 import Results from "../../components/Results/Results";
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions/actions";
 class Converter extends Component {
   state = {
     options: [],
     currentValue: "",
-    currencyVal: 0,
+    // currencyVal: 0,
     pearlsConversion: 0,
     euroConversaion: 0,
     apiKey: "9cc6f8323af31d2f1249",
@@ -36,7 +37,7 @@ class Converter extends Component {
         `https://free.currconv.com/api/v7/currencies?apiKey=${this.state.apiKey}`
       )
       .then(response => {
-        console.log(response);
+        console.log("the response is", response);
         const currencyNamesArray = Object.keys(response.data.results)
           .map(element => {
             return {
@@ -61,7 +62,13 @@ class Converter extends Component {
           options: currencyNamesArray,
           conversionValue: this.props.conversionValue
         });
+      })
+      .catch(error => {
+        console.log("the error is", error);
       });
+    // console.log("Currency ID:", this.state.currencyID);
+
+    //   });
     // console.log("Currency ID:", this.state.currencyID);
   }
 
@@ -83,7 +90,7 @@ class Converter extends Component {
           "https://free.currconv.com/api/v7/convert?q=" +
             query +
             "&compact=ultra&apiKey=" +
-            this.state.apiKey
+            this.props.apiKey
         )
         .then(response => {
           const conversation = response.data[query];
@@ -105,7 +112,7 @@ class Converter extends Component {
     // console.log(conversation);
   };
   render() {
-    console.log(this.state);
+    // console.log(this.state);
 
     // if (this.state.currencyVal && this.state.currentValue) {
     //   this.conversation(this.state.currencyVal, this.state.currentValue);
@@ -118,8 +125,8 @@ class Converter extends Component {
         <p> Logo will go here</p>
         <p> 1 Pearl = {this.props.conversionValue} Euro</p>
         <Select
-          value={this.state.currentValue}
-          onChange={this.handleChange}
+          value={this.props.currentValue}
+          onChange={this.state.handleChange}
           options={this.state.options}
           className={classes.Select}
           // styles={{ height: "50px" }}
@@ -127,7 +134,7 @@ class Converter extends Component {
         <input
           placeholder="0.00"
           type="number"
-          onChange={this.handleInput}
+          onChange={this.props.handleCurrencyInput}
           className={classes.Input}
         />
 
@@ -144,7 +151,7 @@ class Converter extends Component {
           pearls={this.state.pearlsConversion}
           euros={this.state.euroConversaion}
           currentCurrency={this.state.currencyVal}
-          currencyName={this.state.currentValue.value}
+          currencyName={this.props.currentValue.value}
         />
       </div>
       // </Tab>
@@ -168,8 +175,31 @@ class Converter extends Component {
           ))}
           {/* <Dropdown.Item as="button">{this.state.currencyID}</Dropdown.Item> */
 }
-{
-  /* </DropdownButton>  */
-}
 
-export default Converter;
+const mapStateToProps = state => {
+  return {
+    currencyVal: state.currencyVal,
+    euroConversaion: state.euroConversaion,
+    pearlsConversion: state.pearlsConversion,
+    apiKey: state.apiKey,
+    currentValue: state.currentValue,
+    options: state.options
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleCurrencyInput: event =>
+      dispatch(actionCreators.incrementCurrency(event.target.value)),
+    handleCurrencySelector: option =>
+      dispatch(actionCreators.selectedCurrency(option))
+    // fetchCurrencyValues: () =>
+    //   dispatch(actionCreators.fetchingCurrencyValues()),
+    // conversion: () => dispatch({ type: "CONVERSION" })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Converter);
