@@ -112,7 +112,7 @@ class Converter extends Component {
     //   this.conversation(this.state.currencyVal, this.state.currentValue);
     // }
 
-    console.log("the currency val is", this.props.inputedAmount);
+    // console.log("the currency val is", this.props.inputedAmount);
 
     return (
       // <Tabs>
