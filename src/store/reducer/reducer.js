@@ -1,8 +1,6 @@
-import axios from "axios";
-
 const intialState = {
   euroConversaion: 0,
-  currencyVal: 0,
+  inputedAmount: 0,
   pearlsConversion: 0,
   apiKey: "9cc6f8323af31d2f1249",
   currentValue: "",
@@ -11,10 +9,17 @@ const intialState = {
 const reducer = (state = intialState, action) => {
   switch (action.type) {
     case "INCREMENT_CURRENCY":
-      console.log("inside increment curency");
+      // console.log("inside increment curency");
       return {
         ...state,
-        currencyVal: Math.abs(action.event)
+        inputedAmount: Math.abs(action.value)
+      };
+
+    case "STORE_FETCHED_VALUES":
+      // console.log("the action is ", action);
+      return {
+        ...state,
+        options: action.options
       };
 
     case "SELECTED_CURRENCY":
@@ -22,6 +27,19 @@ const reducer = (state = intialState, action) => {
         ...state,
         currentValue: action.option
       };
+
+    case "CONVERSION":
+      return {
+        ...state,
+        euroConversaion: action.euroConversaion,
+        pearlsConversion: action.pearlsConversion
+      };
+
+    // case "CONVERSION":
+    //   return {
+    //     ...state,
+    //     currentValue: action.option
+    //   };
 
     // case "FETCH_CURRENCY_VALUES":
     //   return dispatch => {
@@ -42,17 +60,11 @@ const reducer = (state = intialState, action) => {
     //         dispatch(fetchingSuccess(currencyNamesArray));
     //       });
     //   };
-    case "CONVERSION":
-      return {
-        ...state,
-        currentValue: action.option
-      };
   }
-  // const fetchingValuesStarted = () => ({ type: FETCHING_VALUES_STARTED });
-  const fetchingSuccess = currencyNamesArray => ({
-    ...state,
-    options: currencyNamesArray
-  });
+  // const fetchingSuccess = currencyNamesArray => ({
+  //   ...state,
+  //   options: currencyNamesArray
+  // });
 
   // if (action.type === "INCREMENT") {
   //   return {

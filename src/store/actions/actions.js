@@ -4,6 +4,7 @@ export const INCREMENT_CURRENCY = "INCREMENT_CURRENCY";
 export const SELECTED_CURRENCY = "SELECTED_CURRENCY";
 export const FETCH_CURRENCY_VALUES = "FETCH_CURRENCY_VALUES";
 export const STORE_FETCHED_VALUES = "STORE_FETCHED_VALUES";
+export const CONVERSION = "CONVERSION";
 
 export const incrementCurrency = value => {
   return {
@@ -19,14 +20,51 @@ export const selectedCurrency = value => {
   };
 };
 
-export const storeFetchedValues = values => {
+export const storeFetchedValues = value => {
+  // console.log("the values are ", value);
+
   return {
     type: STORE_FETCHED_VALUES,
-    values: values
+    options: value
   };
 };
 
-export const fetchingCurrencyValues = data => {
+export const conversion = (convertedToEuro, convertedToPearls) => {
+  return {
+    type: CONVERSION,
+    euroConversaion: convertedToEuro.toFixed(2),
+    pearlsConversion: convertedToPearls.toFixed(2)
+  };
+};
+
+export const fetchConversionValue = (
+  currencyValue,
+  selectedCurrency,
+  pearlConversionValue
+) => {
+  if (currencyValue !== null && selectedCurrency !== "") {
+    // console.log(currencyValue, selectedCurrency.value);
+    const query = selectedCurrency.value + "_" + "EUR";
+
+    return dispatch => {
+      axios
+        .get(
+          "https://free.currconv.com/api/v7/convert?q=" +
+            query +
+            "&compact=ultra&apiKey=9cc6f8323af31d2f1249"
+        )
+        .then(response => {
+          const conversation = response.data[query];
+          const convertedToEuro = currencyValue * conversation;
+          const convertedToPearls = convertedToEuro / pearlConversionValue;
+          // console.log("converted to pear;s", convertedToPearls);
+          dispatch(conversion(convertedToEuro, convertedToPearls));
+        });
+    };
+  }
+};
+
+export const fetchingCurrencyValues = () => {
   return dispatch => {
     axios
       .get(
@@ -42,7 +80,9 @@ export const fetchingCurrencyValues = data => {
           })
           .filter(element => element.value !== "EUR");
 
-        dispatch(selectedCurrency(currencyNamesArray));
+        // console.log("the names array is", currencyNamesArray);
+
+        dispatch(storeFetchedValues(currencyNamesArray));
       });
   };
 };
