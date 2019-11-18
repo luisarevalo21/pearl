@@ -8,7 +8,33 @@
   pointer-events: none;
 }
 
-.App-header {
+.Tab {
+  background-color: white !important;
+}
+
+.nav-tabs a {
+  color: #00a4ff;
+}
+.nav-tabs a:hover {
+  color: #ff6c45;
+  background-color: rgb(245, 241, 241);
+  font-weight: bold;
+}
+
+/* .nav li.active a,
+.nav li a:hover,
+.nav li.active a:focus,
+.nav li.active a:hover {
+  background-color: red;
+}
+
+.nav-tabs.active {
+  background-color: red !important;
+}
+/* .nav-link .active { */
+/* background: red;
+} */
+*/ .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
