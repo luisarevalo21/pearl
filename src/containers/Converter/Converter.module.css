@@ -1,0 +1,57 @@
+/* .Menu {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+} */
+
+.Converter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  background: white;
+}
+.Select {
+  /* height: 0; */
+  width: 50%;
+  /* background-color: rgb(244, 244, 244) !important; */
+  /* background: red; */
+
+  margin-bottom: 15px;
+}
+
+.Button {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  /* background-image: linear-gradient(
+    to right,
+    #05aa8b,
+    #00a3ae,
+    #0099d3,
+    #0088ed,
+    #126ceb
+  ); */
+  background-color: rgba(244, 238, 74, 0.564);
+  border-radius: 4px;
+  color: black;
+}
+.Button:hover {
+  background: rgba(249, 245, 134, 0.564);
+}
+.Input {
+  width: 50%;
+  margin-bottom: 5px;
+  min-height: 38px !important;
+  background-color: rgb(244, 244, 244);
+
+  color: black;
+  /* font-weight: bold; */
+}
+
+@media (max-width: 500px) {
+  .Converter {
+    width: 100%;
+  }
+}
