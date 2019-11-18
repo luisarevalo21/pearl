@@ -5,6 +5,7 @@ export const SELECTED_CURRENCY = "SELECTED_CURRENCY";
 export const FETCH_CURRENCY_VALUES = "FETCH_CURRENCY_VALUES";
 export const STORE_FETCHED_VALUES = "STORE_FETCHED_VALUES";
 export const CONVERSION = "CONVERSION";
+export const CLEARSTATE = "CLEARSTATE";
 
 export const incrementCurrency = value => {
   return {
@@ -84,5 +85,12 @@ export const fetchingCurrencyValues = () => {
 
         dispatch(storeFetchedValues(currencyNamesArray));
       });
+  };
+};
+
+export const clearState = () => {
+  console.log("clear state was triggered");
+  return {
+    type: CLEARSTATE
   };
 };

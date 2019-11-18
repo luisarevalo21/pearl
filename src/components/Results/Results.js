@@ -9,7 +9,7 @@ const results = props => {
       {/* <p>
         {props.currentCurrency} {props.currencyName}
       </p> */}
-      <p>{props.currentCurrency}</p>
+      <p>{props.currentCurrency.toFixed(2)}</p>
     </div>
   );
 };

@@ -118,7 +118,7 @@ class Converter extends Component {
       // <Tabs>
       //   <Tab eventKey="summer" title="Summer">
       <div className={classes.Converter}>
-        <p> Logo will go here</p>
+        {/* <p> Logo will go here</p> */}
         <p> 1 Pearl = {this.props.conversionValue} Euro</p>
         <Select
           value={this.props.currentValue}
@@ -207,7 +207,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Converter);
+export default connect(mapStateToProps, mapDispatchToProps)(Converter);

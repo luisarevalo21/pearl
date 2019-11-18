@@ -7,8 +7,11 @@ const intialState = {
   options: []
 };
 const reducer = (state = intialState, action) => {
+  // console.log("ACTION TYPE IS", action.type);
   switch (action.type) {
     case "INCREMENT_CURRENCY":
+      // console.log("INSIDE CLEAR STATE REDUCER");
+
       // console.log("inside increment curency");
       return {
         ...state,
@@ -33,6 +36,15 @@ const reducer = (state = intialState, action) => {
         ...state,
         euroConversaion: action.euroConversaion,
         pearlsConversion: action.pearlsConversion
+      };
+
+    case "CLEARSTATE":
+      return {
+        ...state,
+        euroConversaion: 0,
+        inputedAmount: 0,
+        pearlsConversion: 0,
+        currentValue: ""
       };
 
     // case "CONVERSION":
